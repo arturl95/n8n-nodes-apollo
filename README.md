@@ -1,6 +1,66 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+![Apollo](nodes/Apollo/apollo.svg)
 
-# n8n-nodes-starter
+# n8n-nodes-apollo
+
+Community n8n node for the Apollo API. Supports People and Organization enrichment and search.
+
+- Package: `n8n-nodes-apollo`
+- Requires: Node.js >= 20
+- License: MIT
+- Repository: https://github.com/arturl95/n8n-nodes-apollo
+- npm: https://www.npmjs.com/package/n8n-nodes-apollo
+
+## Installation (in n8n)
+
+1. In n8n, go to Settings → Community Nodes → Install.
+2. Enter the package name: `n8n-nodes-apollo` and install.
+3. Create credentials for “Apollo API” with your API key and optional base URL.
+
+## Credentials
+
+Credential: `Apollo API` (`credentials/ApolloApi.credentials.ts`)
+
+- API Key: Injected via `x-api-key` header.
+- Base URL: Defaults to `https://api.apollo.io`.
+- Test: `GET /v1/auth/health` against the Base URL.
+
+## Supported resources and operations
+
+Resource: `Person`
+
+- Enrich Person — POST `/api/v1/people/match`
+- Search People — POST `/api/v1/mixed_people/search`
+- Bulk Enrich People — POST `/api/v1/people/bulk_match`
+
+Resource: `Organization`
+
+- Enrich Organization — GET `/api/v1/organizations/enrich`
+- Bulk Enrich Organizations — POST `/api/v1/organizations/bulk_enrich`
+- Search Organizations — POST `/api/v1/mixed_companies/search`
+- Get Job Postings — GET `/api/v1/organizations/{organization_id}/job_postings`
+
+## Usage notes
+
+- People Search does not generate new emails or phone numbers; use People Enrichment to retrieve contact details.
+- Most filters are exposed as query parameters and support multiple values via n8n “Fixed Collection” fields (e.g., `person_titles[]`, `organization_locations[]`).
+- Pagination parameters `page` and `per_page` are available where supported.
+
+## Development
+
+```bash
+npm run lint
+npm run build
+npm run dev
+```
+
+Artifacts are emitted to `dist/`. Icons from `nodes/**` and `credentials/**` are copied to `dist` by the Gulp task `build:icons`.
+
+## Changelog
+
+- 0.1.0
+  - Initial release: Apollo credentials and node
+  - Person: Enrich, Search, Bulk Enrich
+  - Organization: Enrich, Bulk Enrich, Search, Job Postings
 
 This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
 
