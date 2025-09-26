@@ -1,6 +1,8 @@
 import { INodeType, INodeTypeDescription, NodeConnectionType } from 'n8n-workflow';
 import { peopleFields, peopleOperations } from './PeopleDescription';
 import { organizationFields, organizationOperations } from './OrganizationDescription';
+import { contactFields, contactOperations } from './ContactDescription';
+import { accountFields, accountOperations } from './AccountDescription';
 
 export class Apollo implements INodeType {
 	description: INodeTypeDescription = {
@@ -46,14 +48,26 @@ export class Apollo implements INodeType {
 						name: 'Organization',
 						value: 'organization',
 					},
+					{
+						name: 'Contact',
+						value: 'contact',
+					},
+					{
+						name: 'Account',
+						value: 'account',
+					},
 				],
 				default: 'person',
 			},
-
+		
 			...peopleOperations,
 			...peopleFields,
 			...organizationOperations,
 			...organizationFields,
+			...contactOperations,
+			...contactFields,
+			...accountOperations,
+			...accountFields,
 		],
 	};
 }
