@@ -67,6 +67,18 @@ export const contactOperations: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				name: 'Search Contacts',
+				value: 'search',
+				description: 'Search for contacts in your Apollo workspace',
+				action: 'Search contacts',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/api/v1/contacts/search',
+					},
+				},
+			},
 		],
 		default: 'create',
 		displayOptions: {
@@ -323,6 +335,148 @@ export const contactFields: INodeProperties[] = [
 			show: {
 				resource: ['contact'],
 				operation: ['create', 'update'],
+			},
+		},
+	},
+
+	/* -------------------------------------------------------------------------- */
+	/*                               contact:search                               */
+	/* -------------------------------------------------------------------------- */
+	{
+		displayName: 'Keywords',
+		name: 'q_keywords',
+		type: 'string',
+		default: '',
+		description:
+			'Keywords for names, titles, employers, or emails (e.g. "tim zheng"; "senior research analyst"; "microsoft")',
+		routing: {
+			send: {
+				property: 'q_keywords',
+				type: 'query',
+			},
+		},
+		displayOptions: {
+			show: {
+				resource: ['contact'],
+				operation: ['search'],
+			},
+		},
+	},
+	{
+		displayName: 'Contact Stage IDs',
+		name: 'contact_stage_ids',
+		type: 'fixedCollection',
+		default: {},
+		description: 'Apollo contact stage IDs to include in results',
+		typeOptions: {
+			multipleValues: true,
+		},
+		options: [
+			{
+				name: 'stage',
+				displayName: 'Stage',
+				values: [
+					{
+						displayName: 'Stage ID',
+						name: 'value',
+						type: 'string',
+						default: '',
+						routing: {
+							send: {
+								property: 'contact_stage_ids[]',
+								type: 'query',
+							},
+						},
+					},
+				],
+			},
+		],
+		displayOptions: {
+			show: {
+				resource: ['contact'],
+				operation: ['search'],
+			},
+		},
+	},
+	{
+		displayName: 'Sort By Field',
+		name: 'sort_by_field',
+		type: 'options',
+		default: 'contact_last_activity_date',
+		description:
+			'How to sort the matching contacts (requires Sort Ascending to apply ordering direction)',
+		options: [
+			{ name: 'Contact Created At', value: 'contact_created_at' },
+			{ name: 'Contact Last Activity Date', value: 'contact_last_activity_date' },
+			{ name: 'Contact Updated At', value: 'contact_updated_at' },
+			{ name: 'Email Last Clicked At', value: 'contact_email_last_clicked_at' },
+			{ name: 'Email Last Opened At', value: 'contact_email_last_opened_at' },
+		],
+		routing: {
+			send: {
+				property: 'sort_by_field',
+				type: 'query',
+			},
+		},
+		displayOptions: {
+			show: {
+				resource: ['contact'],
+				operation: ['search'],
+			},
+		},
+	},
+	{
+		displayName: 'Sort Ascending',
+		name: 'sort_ascending',
+		type: 'boolean',
+		default: false,
+		description: 'Whether to sort ascending (must be used with Sort By Field)',
+		routing: {
+			send: {
+				property: 'sort_ascending',
+				type: 'query',
+			},
+		},
+		displayOptions: {
+			show: {
+				resource: ['contact'],
+				operation: ['search'],
+			},
+		},
+	},
+	{
+		displayName: 'Page',
+		name: 'page',
+		type: 'number',
+		default: 1,
+		routing: {
+			send: {
+				property: 'page',
+				type: 'query',
+			},
+		},
+		displayOptions: {
+			show: {
+				resource: ['contact'],
+				operation: ['search'],
+			},
+		},
+	},
+	{
+		displayName: 'Per Page',
+		name: 'per_page',
+		type: 'number',
+		default: 10,
+		routing: {
+			send: {
+				property: 'per_page',
+				type: 'query',
+			},
+		},
+		displayOptions: {
+			show: {
+				resource: ['contact'],
+				operation: ['search'],
 			},
 		},
 	},

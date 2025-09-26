@@ -39,11 +39,33 @@ Resource: `Organization`
 - Search Organizations — POST `/api/v1/mixed_companies/search`
 - Get Job Postings — GET `/api/v1/organizations/{organization_id}/job_postings`
 
+Resource: `Contact`
+
+- Create Contact — POST `/api/v1/contacts`
+- Update Contact — PUT `/api/v1/contacts/{contact_id}`
+- Search Contacts — POST `/api/v1/contacts/search`
+
+Resource: `Account`
+
+- Search Accounts — POST `/api/v1/accounts/search`
+
+Resource: `Deal`
+
+- Create Deal — POST `/api/v1/opportunities`
+- List All Deals — GET `/api/v1/opportunities/search`
+- View Deal — GET `/api/v1/opportunities/{opportunity_id}`
+- Update Deal — PATCH `/api/v1/opportunities/{opportunity_id}`
+
 ## Usage notes
 
 - People Search does not generate new emails or phone numbers; use People Enrichment to retrieve contact details.
 - Most filters are exposed as query parameters and support multiple values via n8n “Fixed Collection” fields (e.g., `person_titles[]`, `organization_locations[]`).
 - Pagination parameters `page` and `per_page` are available where supported.
+- Contact Create/Update body is constructed from simple fields and Fixed Collections (e.g., `label_names`). Pass `typed_custom_fields` as a JSON object string (e.g., `{ "60c39...": "2025-08-07" }`). Use Apollo’s Custom Fields API to discover field IDs and valid data types.
+- Apollo does not deduplicate on Create Contact. If you create a contact that already exists, Apollo will create a separate new contact.
+- Some workspace-only endpoints have limits or plan requirements:
+  - Contacts/Accounts Search results are capped (100 per page, up to 500 pages). Narrow filters to stay within limits.
+  - Deals endpoints require a master API key; otherwise you will receive 403 responses.
 
 ## Development
 
@@ -56,6 +78,12 @@ npm run dev
 Artifacts are emitted to `dist/`. Icons from `nodes/**` and `credentials/**` are copied to `dist` by the Gulp task `build:icons`.
 
 ## Changelog
+
+- 0.1.1
+  - Added Contact: Search Contacts; Create/Update field coverage and typed_custom_fields support
+  - Added Account: Search Accounts with filtering, sorting, and pagination
+  - Added Deal resource (UI label) with Create/List/View/Update endpoints
+  - Alphabetized resource list and fixed lint issues; improved README usage notes
 
 - 0.1.0
   - Initial release: Apollo credentials and node

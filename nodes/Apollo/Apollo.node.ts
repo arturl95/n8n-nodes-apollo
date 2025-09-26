@@ -3,6 +3,7 @@ import { peopleFields, peopleOperations } from './PeopleDescription';
 import { organizationFields, organizationOperations } from './OrganizationDescription';
 import { contactFields, contactOperations } from './ContactDescription';
 import { accountFields, accountOperations } from './AccountDescription';
+import { opportunityFields, opportunityOperations } from './OpportunityDescription';
 
 export class Apollo implements INodeType {
 	description: INodeTypeDescription = {
@@ -41,20 +42,24 @@ export class Apollo implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Person',
-						value: 'person',
-					},
-					{
-						name: 'Organization',
-						value: 'organization',
+						name: 'Account',
+						value: 'account',
 					},
 					{
 						name: 'Contact',
 						value: 'contact',
 					},
 					{
-						name: 'Account',
-						value: 'account',
+						name: 'Deal',
+						value: 'opportunity',
+					},
+					{
+						name: 'Organization',
+						value: 'organization',
+					},
+					{
+						name: 'Person',
+						value: 'person',
 					},
 				],
 				default: 'person',
@@ -68,6 +73,8 @@ export class Apollo implements INodeType {
 			...contactFields,
 			...accountOperations,
 			...accountFields,
+			...opportunityOperations,
+			...opportunityFields,
 		],
 	};
 }
