@@ -3,10 +3,16 @@
   "version": "0.1.1",
   "description": "Community n8n nodes for Apollo API (People and Organization enrichment)",
   "keywords": [
-    "n8n-community-node-package"
+    "n8n",
+    "n8n-community-node-package",
+    "apollo",
+    "apollo.io",
+    "enrichment",
+    "sales automation",
+    "crm automation"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://aluslabs.com",
   "author": {
     "name": "Artur Lusmägi",
     "email": "prygi@lusmagi.ee"
